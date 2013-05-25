@@ -48,3 +48,31 @@ end
 yum_package "mksh" do
   action :install
 end
+
+# Quick-N-Dirty ITM
+directory "/opt/IBM" do
+  owner "root"
+  mode "0755"
+  action :create
+end
+
+directory "/opt/IBM/ITM" do
+  owner "vagrant"
+  mode "0775"
+  action :create
+end
+
+remote_file "/tmp/centos-64-x64-itm-lite.tar.gz" do
+  source "https://dl.dropboxusercontent.com/u/20692025/centos-64-x64-itm-lite.tar.gz"
+  action :create_if_missing
+  mode "0744"
+  owner "vagrant"
+  group "vagrant"
+end
+
+execute "extract Quick-N-Dirty ITM" do
+  command "cd /opt/IBM; tar -zxvf /tmp/centos-64-x64-itm-lite.tar.gz"
+  user "vagrant"
+  not_if { ::File.exists?("/opt/IBM/ITM/bin")}
+end
+
