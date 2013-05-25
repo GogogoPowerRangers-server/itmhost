@@ -41,6 +41,10 @@ link "/home/vagrant/tms630fp2" do
     to "/Users/dokamura/tms630fp2"
 end
 
+yum_package "gdb" do
+  action :install
+end
+
 yum_package "git" do
   action :install
 end
