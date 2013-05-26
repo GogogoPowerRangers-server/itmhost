@@ -29,10 +29,10 @@ link "/home/vagrant/cmvc" do
     to "/Users/dokamura/cmvc"
 end
 
-link "/home/vagrant/etc" do
+link "/home/vagrant/bin" do
     owner "vagrant"
     group "vagrant"
-    to "/Users/dokamura/etc"
+    to "/Users/dokamura/bin"
 end
 
 link "/home/vagrant/tms630fp2" do
