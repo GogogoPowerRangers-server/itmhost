@@ -75,7 +75,7 @@ remote_file "/tmp/centos-64-x64-itm-lite.tar.gz" do
 end
 
 execute "extract Quick-N-Dirty ITM" do
-  command "cd /opt/IBM; tar -zxvf /tmp/centos-64-x64-itm-lite.tar.gz"
+  command "cd /opt/IBM; tar -zxvf /tmp/centos-64-x64-itm-lite.tar.gz; chown -R vagrant:vagrant /opt/IBM/ITM"
   user "vagrant"
   not_if { ::File.exists?("/opt/IBM/ITM/bin")}
 end
