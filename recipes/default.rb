@@ -53,7 +53,7 @@ yum_package "mksh" do
   action :install
 end
 
-# Quick-N-Dirty ITM
+# Minimal ITM
 directory "/opt/IBM" do
   owner "root"
   mode "0755"
@@ -74,7 +74,7 @@ remote_file "/tmp/centos-64-x64-itm-lite.tar.gz" do
   group "vagrant"
 end
 
-execute "extract Quick-N-Dirty ITM" do
+execute "extract Minimal ITM" do
   command "cd /opt/IBM; tar -zxvf /tmp/centos-64-x64-itm-lite.tar.gz; chown -R vagrant:vagrant /opt/IBM/ITM"
   not_if { ::File.exists?("/opt/IBM/ITM/bin")}
 end
