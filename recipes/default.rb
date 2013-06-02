@@ -11,8 +11,30 @@
 #
 include_recipe 'resolver'
 
+# Temporary: AWS seems to work with root user; Create vagrant account
+group "vagrant" do
+  gid 501
+  action :create
+end
+user "vagrant" do
+  comment "Random User"
+  uid 501
+  gid "vagrant"
+  home "/home/vagrant"
+  shell "/bin/bash"
+  password "vagrant"
+end
+group "wheel" do
+  action :modify
+  members "vagrant"
+  append true
+end
+
 execute "git user" do
-    command "printf '[user]\n    name = Dean Okamura\n    email = dokamura@us.ibm.com\n' >> /home/vagrant/.gitconfig"
+    command "printf '[user]\n" +
+                    "    name = vagrant\n" +
+                    "    email = vagrant@us.ibm.com\n'" +
+            " >> /home/vagrant/.gitconfig"
     creates "/home/vagrant/.gitconfig"
 end
 
@@ -82,4 +104,3 @@ execute "extract Minimal ITM" do
   command "cd /opt/IBM; tar -zxvf /vagrant/centos-64-x64-itm-lite.tar.gz; chown -R vagrant:vagrant /opt/IBM/ITM"
   not_if { ::File.exists?("/opt/IBM/ITM/bin")}
 end
-
