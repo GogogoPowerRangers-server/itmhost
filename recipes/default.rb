@@ -13,12 +13,10 @@ include_recipe 'resolver'
 
 # Temporary: AWS seems to work with root user; Create vagrant account
 group "vagrant" do
-  gid 501
   action :create
 end
 user "vagrant" do
   comment "Random User"
-  uid 501
   gid "vagrant"
   home "/home/vagrant"
   shell "/bin/bash"
