@@ -80,18 +80,12 @@ directory "/opt/IBM" do
   action :create
 end
 
-directory "/opt/IBM/ITM" do
-  owner "vagrant"
-  mode "0775"
-  action :create
-end
-
 # Download from AUSGSA or Dropbox
-remote_file "/vagrant/centos-64-x64-itm-lite.tar.gz" do
+remote_file "/vagrant/ITM-lite-6.3.0.tar.gz" do
   # AUSGSA
-  source "https://ausgsa.ibm.com/home/d/o/dokamura/web/public/centos-64-x64-itm-lite.tar.gz"
+  source "https://ausgsa.ibm.com/home/d/o/dokamura/web/public/ITM-lite-6.3.0.tar.gz"
   # Dropbox
-  # source "https://dl.dropboxusercontent.com/u/20692025/centos-64-x64-itm-lite.tar.gz"
+  # source "https://dl.dropboxusercontent.com/u/20692025/ITM-lite-6.3.0.tar.gz"
   action :create_if_missing
   mode "0744"
   owner "vagrant"
@@ -99,6 +93,6 @@ remote_file "/vagrant/centos-64-x64-itm-lite.tar.gz" do
 end
 
 execute "extract Minimal ITM" do
-  command "cd /opt/IBM; tar -zxvf /vagrant/centos-64-x64-itm-lite.tar.gz; chown -R vagrant:vagrant /opt/IBM/ITM"
+  command "cd /opt/IBM; rm -rf ITM; tar -zxvf /vagrant/ITM-lite-6.3.0.tar.gz; mv ITM-lite-6.3.0 ITM; chown -R vagrant:vagrant /opt/IBM/ITM"
   not_if { ::File.exists?("/opt/IBM/ITM/bin")}
 end
