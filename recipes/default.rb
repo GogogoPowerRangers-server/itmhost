@@ -86,12 +86,18 @@ directory "/opt/IBM/ITM" do
   action :create
 end
 
-# Download from AUSGSA or Dropbox
+# ITM Lite environment variables
+execute "ITM Lite environment variables" do
+  command "cp /vagrant/itmlite.sh /etc/profile.d/itmlite.sh"
+  creates "/etc/profile.d/itmlite.sh"
+end
+
+# ITM Lite Download from AUSGSA or Dropbox
 remote_file "/vagrant/centos-64-x64-itm-lite.tar.gz" do
   # AUSGSA
   source "https://ausgsa.ibm.com/home/d/o/dokamura/web/public/centos-64-x64-itm-lite.tar.gz"
   # Dropbox
-  # source "https://dl.dropboxusercontent.com/u/20692025/centos-64-x64-itm-lite.tar.gz"
+  # source "https://dl.dropboxusercontent.com/u/123456789/centos-64-x64-itm-lite.tar.gz"
   action :create_if_missing
   mode "0744"
   owner "vagrant"
