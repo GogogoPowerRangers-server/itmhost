@@ -81,10 +81,10 @@ directory "/opt/IBM" do
 end
 
 # ITM Lite environment variables
-execute "ITM Lite environment variables" do
-  command "cp /vagrant/itmlite.sh /etc/profile.d/itmlite.sh"
-  creates "/etc/profile.d/itmlite.sh"
-end
+# execute "ITM Lite environment variables" do
+#   command "cp /vagrant/itmlite.sh /etc/profile.d/itmlite.sh"
+#   creates "/etc/profile.d/itmlite.sh"
+# end
 
 # ITM Lite Download from AUSGSA or Dropbox
 remote_file "/vagrant/ITM-lite-6.3.0.tar.gz" do
