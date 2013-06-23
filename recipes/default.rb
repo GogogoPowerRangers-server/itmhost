@@ -73,6 +73,10 @@ yum_package "mksh" do
   action :install
 end
 
+yum_package "pam-devel" do
+  action :install
+end
+
 # Minimal ITM
 directory "/opt/IBM" do
   owner "root"
