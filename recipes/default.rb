@@ -106,6 +106,8 @@ end
 remote_file "/vagrant/ITM-lite-6.3.0-2.el6.x86_64.rpm" do
   # AUSGSA
   source "https://ausgsa.ibm.com/home/d/o/dokamura/web/public/ITM-lite-6.3.0-2.el6.x86_64.rpm"
+  # AWS S3
+  source "https://s3.amazonaws.com/dokamura/itmhost/ITM-lite-6.3.0-2.el6.x86_64.rpm"
   action :create_if_missing
   mode "0744"
   owner "vagrant"
