@@ -65,6 +65,10 @@ link "/home/vagrant/tms630fp2" do
     to "/Users/dokamura/tms630fp2"
 end
 
+yum_package "compat-libstdc++-33" do
+  action :install
+end
+
 yum_package "gdb" do
   action :install
 end
@@ -73,7 +77,11 @@ yum_package "git" do
   action :install
 end
 
-yum_package "mksh" do
+yum_package "ksh" do
+  action :install
+end
+
+yum_package "rsync" do
   action :install
 end
 
@@ -95,18 +103,16 @@ end
 # end
 
 # ITM Lite Download from AUSGSA or Dropbox
-remote_file "/vagrant/ITM-lite-6.3.0.tar.gz" do
+remote_file "/vagrant/ITM-lite-6.3.0-2.el6.x86_64.rpm" do
   # AUSGSA
-  source "https://ausgsa.ibm.com/home/d/o/dokamura/web/public/ITM-lite-6.3.0.tar.gz"
-  # Dropbox
-  # source "https://dl.dropboxusercontent.com/u/20692025/ITM-lite-6.3.0.tar.gz"
+  source "https://ausgsa.ibm.com/home/d/o/dokamura/web/public/ITM-lite-6.3.0-2.el6.x86_64.rpm"
   action :create_if_missing
   mode "0744"
   owner "vagrant"
   group "vagrant"
 end
 
-execute "extract Minimal ITM" do
-  command "cd /opt/IBM; rm -rf ITM; tar -zxvf /vagrant/ITM-lite-6.3.0.tar.gz; mv ITM-lite-6.3.0 ITM; chown -R vagrant:vagrant /opt/IBM/ITM"
+execute "Minimal ITM" do
+  command "rpm -i /vagrant/ITM-lite-6.3.0-2.el6.x86_64.rpm; chown -R vagrant:vagrant /opt/IBM/ITM"
   not_if { ::File.exists?("/opt/IBM/ITM/bin")}
 end
