@@ -1,13 +1,17 @@
 #
-# Licensed Materials - Property of IBM
+# Copyright 2013 Dean Okamura
 #
-# 2013-IBM
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
 #
-# (C) Copyright IBM Corp. 2013    All Rights Reserved.
+#     http://www.apache.org/licenses/LICENSE-2.0
 #
-# US Government Users Restricted Rights - Use, duplication or
-# disclosure restricted by GSA ADP Schedule Contract with
-# IBM Corp.
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 #
 include_recipe 'resolver'
 
@@ -61,6 +65,10 @@ link "/home/vagrant/tms630fp2" do
     to "/Users/dokamura/tms630fp2"
 end
 
+yum_package "compat-libstdc++-33" do
+  action :install
+end
+
 yum_package "gdb" do
   action :install
 end
@@ -69,7 +77,11 @@ yum_package "git" do
   action :install
 end
 
-yum_package "mksh" do
+yum_package "ksh" do
+  action :install
+end
+
+yum_package "rsync" do
   action :install
 end
 
@@ -96,13 +108,18 @@ remote_file "/vagrant/ITM-lite-6.3.0.tar.gz" do
   source "https://ausgsa.ibm.com/home/d/o/dokamura/web/public/ITM-lite-6.3.0.tar.gz"
   # Dropbox
   # source "https://dl.dropboxusercontent.com/u/20692025/ITM-lite-6.3.0.tar.gz"
+remote_file "/vagrant/ITM-lite-6.3.0-2.el6.x86_64.rpm" do
+  # AUSGSA
+  source "https://ausgsa.ibm.com/home/d/o/dokamura/web/public/ITM-lite-6.3.0-2.el6.x86_64.rpm"
+  # AWS S3
+  source "https://s3.amazonaws.com/dokamura/itmhost/ITM-lite-6.3.0-2.el6.x86_64.rpm"
   action :create_if_missing
   mode "0744"
   owner "vagrant"
   group "vagrant"
 end
 
-execute "extract Minimal ITM" do
-  command "cd /opt/IBM; rm -rf ITM; tar -zxvf /vagrant/ITM-lite-6.3.0.tar.gz; mv ITM-lite-6.3.0 ITM; chown -R vagrant:vagrant /opt/IBM/ITM"
+execute "Minimal ITM" do
+  command "rpm -e ITM-lite-6.3.0-2.el6.x86_64; rpm -i /vagrant/ITM-lite-6.3.0-2.el6.x86_64.rpm; chown -R vagrant:vagrant /opt/IBM/ITM"
   not_if { ::File.exists?("/opt/IBM/ITM/bin")}
 end
