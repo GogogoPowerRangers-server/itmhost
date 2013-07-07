@@ -96,18 +96,7 @@ directory "/opt/IBM" do
   action :create
 end
 
-# ITM Lite environment variables
-# execute "ITM Lite environment variables" do
-#   command "cp /vagrant/itmlite.sh /etc/profile.d/itmlite.sh"
-#   creates "/etc/profile.d/itmlite.sh"
-# end
-
 # ITM Lite Download from AUSGSA or Dropbox
-remote_file "/vagrant/ITM-lite-6.3.0.tar.gz" do
-  # AUSGSA
-  source "https://ausgsa.ibm.com/home/d/o/dokamura/web/public/ITM-lite-6.3.0.tar.gz"
-  # Dropbox
-  # source "https://dl.dropboxusercontent.com/u/20692025/ITM-lite-6.3.0.tar.gz"
 remote_file "/vagrant/ITM-lite-6.3.0-2.el6.x86_64.rpm" do
   # AUSGSA
   source "https://ausgsa.ibm.com/home/d/o/dokamura/web/public/ITM-lite-6.3.0-2.el6.x86_64.rpm"
@@ -123,3 +112,5 @@ execute "Minimal ITM" do
   command "rpm -e ITM-lite-6.3.0-2.el6.x86_64; rpm -i /vagrant/ITM-lite-6.3.0-2.el6.x86_64.rpm; chown -R vagrant:vagrant /opt/IBM/ITM"
   not_if { ::File.exists?("/opt/IBM/ITM/bin")}
 end
+
+#
