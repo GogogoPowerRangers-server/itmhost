@@ -33,36 +33,36 @@ group "wheel" do
 end
 
 execute "git user" do
-    command "printf '[user]\n" +
-                    "    name = vagrant\n" +
-                    "    email = vagrant@us.ibm.com\n'" +
-            " >> /home/vagrant/.gitconfig"
-    creates "/home/vagrant/.gitconfig"
+  command "printf '[user]\n" +
+                  "    name = vagrant\n" +
+                  "    email = vagrant@us.ibm.com\n'" +
+          " >> /home/vagrant/.gitconfig"
+  creates "/home/vagrant/.gitconfig"
 end
 
 directory "/home/vagrant/temp" do
-    owner "vagrant"
-    group "vagrant"
-    mode 0775
-    action :create
+  owner "vagrant"
+  group "vagrant"
+  mode 0775
+  action :create
 end
 
 link "/home/vagrant/cmvc" do
-    owner "vagrant"
-    group "vagrant"
-    to "/Users/dokamura/cmvc"
+  owner "vagrant"
+  group "vagrant"
+  to "/Users/dokamura/cmvc"
 end
 
 link "/home/vagrant/bin" do
-    owner "vagrant"
-    group "vagrant"
-    to "/Users/dokamura/bin"
+  owner "vagrant"
+  group "vagrant"
+  to "/Users/dokamura/bin"
 end
 
 link "/home/vagrant/tms630fp2" do
-    owner "vagrant"
-    group "vagrant"
-    to "/Users/dokamura/tms630fp2"
+  owner "vagrant"
+  group "vagrant"
+  to "/Users/dokamura/tms630fp2"
 end
 
 yum_package "compat-libstdc++-33" do
@@ -89,6 +89,17 @@ yum_package "pam-devel" do
   action :install
 end
 
+yum_package "curl" do
+    action :install
+end
+
+# Turn off iptables for port forwarding
+execute "Turn off iptables" do
+  command "sudo /etc/init.d/iptables save; sudo /etc/init.d/iptables stop && sudo chkconfig iptables off && touch /tmp/Turn_off_iptables"
+  creates "/tmp/Turn_off_iptables"
+  action :run
+end
+
 # Minimal ITM
 directory "/opt/IBM" do
   owner "root"
@@ -111,6 +122,7 @@ end
 execute "Minimal ITM" do
   command "rpm -e ITM-lite-6.3.0-2.el6.x86_64; rpm -i /vagrant/ITM-lite-6.3.0-2.el6.x86_64.rpm; chown -R vagrant:vagrant /opt/IBM/ITM"
   not_if { ::File.exists?("/opt/IBM/ITM/bin")}
+  action :run
 end
 
 #
