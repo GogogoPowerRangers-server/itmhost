@@ -96,6 +96,13 @@ directory "/opt/IBM" do
   action :create
 end
 
+# Turn off iptables for port forwarding
+execute "Turn off iptables" do
+  command "sudo /etc/init.d/iptables save; sudo /etc/init.d/iptables stop && sudo chkconfig iptables off && touch /tmp/Turn_off_iptables"
+  creates "/tmp/Turn_off_iptables"
+  action :run
+end
+
 # ITM Lite environment variables
 # execute "ITM Lite environment variables" do
 #   command "cp /vagrant/itmlite.sh /etc/profile.d/itmlite.sh"
@@ -105,7 +112,7 @@ end
 # ITM Lite Download from AUSGSA or Dropbox
 remote_file "/vagrant/ITM-lite-6.3.0-2.el6.x86_64.rpm" do
   # AUSGSA
-  source "https://ausgsa.ibm.com/home/d/o/dokamura/web/public/ITM-lite-6.3.0-2.el6.x86_64.rpm"
+  # source "https://ausgsa.ibm.com/home/d/o/dokamura/web/public/ITM-lite-6.3.0-2.el6.x86_64.rpm"
   # AWS S3
   source "https://s3.amazonaws.com/dokamura/itmhost/ITM-lite-6.3.0-2.el6.x86_64.rpm"
   action :create_if_missing
@@ -118,3 +125,5 @@ execute "Minimal ITM" do
   command "rpm -e ITM-lite-6.3.0-2.el6.x86_64; rpm -i /vagrant/ITM-lite-6.3.0-2.el6.x86_64.rpm; chown -R vagrant:vagrant /opt/IBM/ITM"
   not_if { ::File.exists?("/opt/IBM/ITM/bin")}
 end
+
+#
