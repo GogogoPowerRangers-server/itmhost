@@ -126,4 +126,22 @@ execute "Minimal ITM" do
   not_if { ::File.exists?("/opt/IBM/ITM/bin")}
 end
 
+# Python RDF
+remote_file "/tmp/epel-release-6-8.noarch.rpm" do
+  source "http://dl.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm"
+  action :create_if_missing
+  mode "0744"
+  owner "vagrant"
+  group "vagrant"
+end
+
+execute "EPEL repository" do
+  command "sudo yum install /tmp/epel-release-6-8.noarch.rpm && touch /tmp/epel_repository"
+  creates "/tmp/epel_repository"
+end
+
+yum_package "python-rdflib" do
+  action :install
+end
+
 #
