@@ -136,7 +136,7 @@ remote_file "/tmp/epel-release-6-8.noarch.rpm" do
 end
 
 execute "EPEL repository" do
-  command "sudo yum install /tmp/epel-release-6-8.noarch.rpm && touch /tmp/epel_repository"
+  command "sudo yum -y install /tmp/epel-release-6-8.noarch.rpm && touch /tmp/epel_repository"
   creates "/tmp/epel_repository"
 end
 
