@@ -13,7 +13,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-include_recipe 'resolver'
 
 # Temporary: AWS seems to work with root user; Create vagrant account
 group "vagrant" do

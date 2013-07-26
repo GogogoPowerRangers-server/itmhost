@@ -30,8 +30,11 @@ If objFSO.FolderExists(imaDirectory) Then
 If Not objFSO.FolderExists(db2Directory) Then
     WScript.Echo "Install DB2"
     Set objShell = CreateObject("WScript.Shell")
-    objShell.Run "cmd /c cd " & imaDirectory & " && " &
-        "setup -u C:\cookbooks\itmhost\recipes\db2ese.rsp"
+    objShell.CurrentDirectory = imaDirectory
+    objShell.Run "cmd /k setup -u C:\cookbooks\itmhost\recipes\db2ese.rsp"
+    WScript.Echo "DB2 installation can take several minutes."
+    WScript.Echo "Login as db2admin, then ..."
+    WScript.Echo "Run " & db2Directory & "\BIN\db2val.exe to validate DB2 installation"
 End If
 End If
 

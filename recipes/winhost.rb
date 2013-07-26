@@ -40,4 +40,9 @@ execute "DB2 installation files" do
   not_if { ::File.exists?("C:\\temp\\ESE")}
 end
 
+execute "DB2 install" do
+  command "cscript /nologo " + File.dirname(__FILE__) + "\\DB2-install.vbs"
+  not_if { ::File.exists?("C:\\Program Files\\IBM\\SQLLIB")}
+end
+
 #
