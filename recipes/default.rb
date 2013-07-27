@@ -13,7 +13,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-include_recipe 'resolver'
 
 # Temporary: AWS seems to work with root user; Create vagrant account
 group "vagrant" do
@@ -100,6 +99,13 @@ directory "/opt/IBM" do
   action :create
 end
 
+# Turn off iptables for port forwarding
+execute "Turn off iptables" do
+  command "sudo /etc/init.d/iptables save; sudo /etc/init.d/iptables stop && sudo chkconfig iptables off && touch /tmp/Turn_off_iptables"
+  creates "/tmp/Turn_off_iptables"
+  action :run
+end
+
 # ITM Lite environment variables
 # execute "ITM Lite environment variables" do
 #   command "cp /vagrant/itmlite.sh /etc/profile.d/itmlite.sh"
@@ -109,7 +115,7 @@ end
 # ITM Lite Download from AUSGSA or Dropbox
 remote_file "/vagrant/ITM-lite-6.3.0-2.el6.x86_64.rpm" do
   # AUSGSA
-  source "https://ausgsa.ibm.com/home/d/o/dokamura/web/public/ITM-lite-6.3.0-2.el6.x86_64.rpm"
+  # source "https://ausgsa.ibm.com/home/d/o/dokamura/web/public/ITM-lite-6.3.0-2.el6.x86_64.rpm"
   # AWS S3
   source "https://s3.amazonaws.com/dokamura/itmhost/ITM-lite-6.3.0-2.el6.x86_64.rpm"
   action :create_if_missing
@@ -122,3 +128,23 @@ execute "Minimal ITM" do
   command "rpm -e ITM-lite-6.3.0-2.el6.x86_64; rpm -i /vagrant/ITM-lite-6.3.0-2.el6.x86_64.rpm; chown -R vagrant:vagrant /opt/IBM/ITM"
   not_if { ::File.exists?("/opt/IBM/ITM/bin")}
 end
+
+# Python RDF
+remote_file "/tmp/epel-release-6-8.noarch.rpm" do
+  source "http://dl.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm"
+  action :create_if_missing
+  mode "0744"
+  owner "vagrant"
+  group "vagrant"
+end
+
+execute "EPEL repository" do
+  command "sudo yum -y install /tmp/epel-release-6-8.noarch.rpm && touch /tmp/epel_repository"
+  creates "/tmp/epel_repository"
+end
+
+yum_package "python-rdflib" do
+  action :install
+end
+
+#
