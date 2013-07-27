@@ -47,10 +47,10 @@ directory "/home/vagrant/temp" do
     action :create
 end
 
-link "/home/vagrant/cmvc" do
+link "/home/vagrant/JazzSCM" do
     owner "vagrant"
     group "vagrant"
-    to "/Users/dokamura/cmvc"
+    to "/Users/dokamura/JazzSCM"
 end
 
 link "/home/vagrant/bin" do
@@ -59,10 +59,10 @@ link "/home/vagrant/bin" do
     to "/Users/dokamura/bin"
 end
 
-link "/home/vagrant/tms630fp2" do
+link "/home/vagrant/itmdev" do
     owner "vagrant"
     group "vagrant"
-    to "/Users/dokamura/tms630fp2"
+    to "/Users/dokamura/itmdev"
 end
 
 yum_package "compat-libstdc++-33" do
