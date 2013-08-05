@@ -48,6 +48,18 @@ execute "/home directory" do
   not_if { ::File.exists?("C:\\cygwin64\\home\\" + ENV['USERNAME'])}
 end
 
+# Mount C:\Users
+execute "Mount C:\\Users" do
+  command "echo >> C:\\cygwin64\\etc\\fstab C:/Users /Users ntfs text,posix=0 0 0 && C:\\cygwin64\\bin\\mount -a && echo > C:\\cygwin64\\tmp\\fstab_done done"
+  not_if { ::File.exists?("C:\\cygwin64\\tmp\\fstab_done")}
+end
+
+# Change to C:\Users for home directories
+execute "Change to C:\Users for home directories" do
+  command "copy C:\\cygwin64\\etc\\passwd C:\\cygwin64\\tmp\\passwd.backup && C:\\cygwin64\\bin\\sed.exe 's#/home/#/Users/#' < C:\\cygwin64\\tmp\\passwd.backup > C:\\cygwin64\\etc\\passwd"
+  not_if { ::File.exists?("C:\\cygwin64\\tmp\\passwd.backup")}
+end
+
 # Install sshd
 execute "Install sshd" do
   command "C:\\cygwin64\\bin\\bash.exe --login -c '/cygdrive/c/vagrant/ssh-host-config -y -w v8a8grant'"
@@ -61,18 +73,6 @@ end
 # Start sshd
 execute "Start sshd" do
   command "net start sshd"
-end
-
-# Mount C:\Users
-execute "Mount C:\\Users" do
-  command "echo >> C:\\cygwin64\\etc\\fstab C:/Users /Users ntfs text,posix=0 0 0 && C:\\cygwin64\\bin\\mount -a && echo > C:\\cygwin64\\tmp\\fstab_done done"
-  not_if { ::File.exists?("C:\\cygwin64\\tmp\\fstab_done")}
-end
-
-# Change to C:\Users for home directories
-execute "Change to C:\Users for home directories" do
-  command "copy C:\\cygwin64\\etc\\passwd C:\\cygwin64\\tmp\\passwd.backup && C:\\cygwin64\\bin\\sed.exe 's#/home/#/Users/#' < C:\\cygwin64\\tmp\\passwd.backup > C:\\cygwin64\\etc\\passwd"
-  not_if { ::File.exists?("C:\\cygwin64\\tmp\\passwd.backup")}
 end
 
 #
