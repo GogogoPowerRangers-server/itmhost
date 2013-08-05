@@ -1,0 +1,26 @@
+Removing SSHD serviceEdit
+
+To remove Cygwin sshd in the cleanest possible way:
+
+cygrunsrv -E sshd
+
+cygrunsrv -R sshd
+
+delete the folder c:\cygwin and all its sub-folders
+
+remove the Environment Variable 'CYGWIN'
+
+edit the Environment path accordingly
+
+Start...Run... regedit and delete these two registry trees
+
+"HKEY_CURRENT_USER_Software_Cygnus Solutions"
+
+"HKEY_LOCAL_MACHINE_Software_Cygnus Solutions"
+
+Go to Control Panel, Category View, Performance and Maintenance,
+      Administrative Tools, Computer Management.
+... or ...
+Click Start...Run...compmgmt.msc
+
+Delete the sshd user if it exists in the "System Tools" - "Local Users and Groups" - "Users" section.
