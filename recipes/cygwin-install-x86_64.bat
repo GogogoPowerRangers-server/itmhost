@@ -26,7 +26,7 @@ if EXIST C:\vagrant\setup-x86_64.exe goto :fi_download
 if EXIST C:\cygwin64\bin\bash.exe goto :fi_bash
     @echo Install Cygwin
     @REM mirror.mcs.anl.gov
-    C:\vagrant\setup-x86_64.exe -q -D -s http://mirrors.xmission.com/cygwin -l C:\vagrant -L C:\cygwin -P binutils,gcc-g++,inetutils,make,openssh,python,rsync,vim,zip,unzip
+    C:\vagrant\setup-x86_64.exe -q -D -s http://mirrors.xmission.com/cygwin -l C:\vagrant -L C:\cygwin -P binutils,curl,gcc-g++,inetutils,make,openssh,python,rsync,vim,zip,unzip
     if NOT EXIST C:\cygwin64\bin\mkpasswd.exe goto :done
 :fi_bash
 

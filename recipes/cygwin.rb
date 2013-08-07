@@ -28,7 +28,7 @@ end
 
 # Install Cygwin
 execute "Install Cygwin" do
-  command "C:\\vagrant\\setup-x86_64.exe -q -D -s http://mirrors.xmission.com/cygwin -l C:\\vagrant -L C:\\cygwin -P binutils,gcc-g++,inetutils,make,openssh,python,rsync,vim,zip,unzip"
+  command "C:\\vagrant\\setup-x86_64.exe -q -D -s http://mirrors.xmission.com/cygwin -l C:\\vagrant -L C:\\cygwin -P binutils,curl,gcc-g++,inetutils,make,openssh,python,rsync,vim,zip,unzip"
   not_if { ::File.exists?("C:\\cygwin64\\bin\\bash.exe")}
 end
 
