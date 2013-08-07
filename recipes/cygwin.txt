@@ -1,0 +1,18 @@
+cygwin.rb needs a little setup
+
+1.  Create C:\vagrant and copy these files to C:\vagrant
+
+    chef-run.bat
+    node.json
+    solo.rb
+    ssh-host-config
+
+    Note: chef-run.bat includes this setup.
+
+2.  Run chef-solo with cygwin recipe.
+
+3.  You can configure Cygwin using C:\vagrant\setup-x86_64.exe.
+
+    Note: Run setup-x86_64.exe as Administrator.
+
+

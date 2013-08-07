@@ -20,6 +20,21 @@
 mkdir C:\temp\chef
 mkdir C:\temp\chef\databags
 
+if EXIST C:\chef\cookbooks\itmhost goto :fi_cookbooks
+    @echo C:\chef\cookbooks\itmhost is missing
+    goto :done
+:fi_cookbooks
+
+@REM cygwin.rb needs a little setup
+if EXIST C:\vagrant goto :fi_setup
+    mkdir C:\vagrant
+    copy chef-run.bat C:\vagrant
+    copy node.json C:\vagrant
+    copy solo.rb C:\vagrant
+    copy ssh-host-config C:\vagrant
+:fi_setup
+
+@echo Installing Cygwin
 chef-solo -c C:\vagrant\solo.rb -j C:\vagrant\node.json
 
 :done
