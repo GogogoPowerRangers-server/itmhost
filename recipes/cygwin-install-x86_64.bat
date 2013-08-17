@@ -17,6 +17,8 @@
 
 @setlocal
 
+if "%1" == "provision" goto :provision
+
 if EXIST C:\vagrant\setup-x86_64.exe goto :fi_download
     @echo Download setup-x86_64.exe
     cscript /nologo C:\vagrant\wget.vbs http://www.cygwin.com/setup-x86_64.exe C:\vagrant\setup-x86_64.exe
@@ -26,9 +28,11 @@ if EXIST C:\vagrant\setup-x86_64.exe goto :fi_download
 if EXIST C:\cygwin64\bin\bash.exe goto :fi_bash
     @echo Install Cygwin
     @REM mirror.mcs.anl.gov
-    C:\vagrant\setup-x86_64.exe -q -D -s http://mirrors.xmission.com/cygwin -l C:\vagrant -L C:\cygwin -P binutils,curl,gcc-g++,inetutils,make,openssh,python,rsync,vim,zip,unzip
+    C:\vagrant\setup-x86_64.exe -q -D -s http://mirrors.xmission.com/cygwin -l C:\vagrant -L C:\cygwin -P binutils,curl,dos2unix,gcc-g++,inetutils,make,openssh,python,rsync,zip,unzip
     if NOT EXIST C:\cygwin64\bin\mkpasswd.exe goto :done
 :fi_bash
+
+:provision
 
 if EXIST C:\cygwin64\etc\passwd goto :fi_passwd
     @echo /etc/passwd
@@ -45,6 +49,8 @@ if EXIST C:\cygwin64\home\%USERNAME% goto :fi_home
     mkdir C:\cygwin64\home\%USERNAME%
 :fi_home
 
+if "%1" == "provision" goto :fin_provision
+
 if EXIST C:\cygwin64_done goto :fi_sshd
     @echo Install sshd
     C:\cygwin64\bin\bash.exe --login -c '/cygdrive/c/vagrant/ssh-host-config -y -w v8a8grant'
@@ -59,6 +65,8 @@ if EXIST C:\cygwin64_done goto :fi_sshd_started
     @echo Start sshd
     net start sshd
 :fi_sshd_started
+
+:fin_provision
 
 find "C:/Users" C:\cygwin64\etc\fstab
 if "%ERRORLEVEL%" == "0" goto :fi_Users
