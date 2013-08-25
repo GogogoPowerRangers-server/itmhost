@@ -1,0 +1,97 @@
+AUTO_COMPILE_OPTIONS=F
+AUTO_HTTPSERVER=YES
+AUTO_MUSTCONNECT=IGNORE
+AUTO_OPERATOR_ENABLED=NO
+AUTO_PROGRAMS=provider.bin
+AUTO_RELATIVE=${CANDLEHOME}/${PRODUCTARCH}/${PRODUCTCODE}
+AUTO_RESPONSE_ENABLED=YES
+AUTO_RSP=${CANDLEHOME}/${PRODUCTARCH}/${PRODUCTCODE}
+AUTO_SCRIPT_DIR=${CANDLEHOME}/${PRODUCTARCH}/${PRODUCTCODE}/scripts
+AUTO_SYNTAXCHECK=YES
+AUTO_WORKSPACE_DIR=${CANDLEHOME}/${PRODUCTARCH}/${PRODUCTCODE}/scripts
+LD_LIBRARY_PATH=${CANDLEHOME}/${GSKARCH}/gs/${GSKLIB}:/lib:/usr/lib:${CANDLEHOME}/${PRODUCTARCH}/${PRODUCTCODE}/lib
+LIBPATH=${CANDLEHOME}/${GSKARCH}/gs/${GSKLIB}:/lib:/usr/lib:${CANDLEHOME}/${PRODUCTARCH}/${PRODUCTCODE}/lib
+PATH=/usr/bin:/bin:${CANDLEHOME}/${PRODUCTARCH}/${PRODUCTCODE}/bin
+SHLIB_PATH=${CANDLEHOME}/${GSKARCH}/gs/${GSKLIB}:/lib:/usr/lib:${CANDLEHOME}/${PRODUCTARCH}/${PRODUCTCODE}/lib
+ICCRTE_DIR=${CANDLEHOME}/${GSKARCH}/gs
+ITM_BINARCH=${PRODUCTARCH}
+KBB_ACF1_PATH=${CANDLEHOME}/tmaitm6/${TEMAARCH}/bin
+KGL_ENABLE_ATR2=Y
+KGL_MSG2_EVENTLOG=FORMAT
+KAS_MSGBASE=${CANDLEHOME}/${PRODUCTARCH}/${PRODUCTCODE}/bin/KASMSENU
+KGL_MSG2_UNIVERSAL=YES
+KGL_TRC1=ENABLE ERRLOG
+KBB_SIG1=-dumpoff -trace
+COMMAND=kasmain
+KDHS_ALLOW_DELETE_METHOD=Y
+# CT_CMSLIST is for Agents
+CT_CMSLIST=
+# =============================================
+# The following lines are missing from the default installation
+# =============================================
+KAS_REGISTRY_SERVICES_ENABLED=Yes
+KAS_REGISTRY_SERVICES_URL_PROTOCOL=HTTP
+KAS_REGISTRY_SERVICES_URL_HOSTNAME=nc185029.tivlab.austin.ibm.com
+KAS_REGISTRY_SERVICES_URL_HTTP_PORT=16310
+KAS_REGISTRY_SERVICES_URL_HTTPS_PORT=16311
+KAS_REGISTRY_SERVICES_AUTH=Yes
+KAS_REGISTRY_SERVICES_USER=system
+KAS_REGISTRY_SERVICES_PASSWORD={AES256:keyfile:a}E5sQ08hF/o1b57gPVM5ZSA==
+KAS_REGISTRY_SERVICES_ACTING_HUB_ALIAS=
+KAS_SERVER_PROTOCOL=HTTP
+KAS_SERVER_HTTP_PORT=10001
+KAS_SERVER_HTTPS_PORT=10002
+# =============================================
+# KAS_OSLC_TEMPLATE_DIR=OSLC
+#
+# If you want the OSLC Service Provider to read its product template files from the locally
+# installed HUB TEMS, use this variable to specify an alternate template directory. 
+# - The variable must point to a directory under the Automation Server current working directory.
+# - This is the /opt/ibm/ccm/oslc_pm/lx8266/as directory.
+# - Use only a relative path name.  You can not specify an absolute path name.
+# - Space characters and other special characters are not permitted in the path name.
+# The example above would point to your directory named /opt/ibm/ccm/oslc_pm/lx8266/as/OSLC
+# - Create the subdirectory OSLC/libs and copy all k<pc>util.lib or k<pc>util.bin files to this dir.
+# - Create the subdirectory OSLC/xml  and copy all k<pc>oslc.xml files to this dir.
+# =============================================
+# KAS_SECURITY_SERVICES_ENABLED must be set to YES to enable
+# single sign support in the OSLC Performance Monitoring service
+# provider.  When Security Services support is enabled,
+# the service provider connects to the
+# Jazz for Service Management Security Services
+# application to validate LTPA tokens included in
+# in HTTP request headers. The service provider
+# does not support basic authentication requests.
+#
+# For this release of IBM Tivoli Monitoring, the Jazz for Service Management
+# Registry Services and Security Services applications must
+# be installed on the same host, use the same port, username
+# and password and support HTTPS connections.
+# =============================================
+# KAS_SECURITY_SERVICES_ENABLED=NO
+# =============================================
+KAS_CURI_DP_ENABLED=NO
+# =============================================
+# TEMS connection (KAS_CURI_DP_ENABLED is NO)
+# ---------------------------------------------
+KDC_FAMILIES=IP.PIPE PORT:1918 IP use:n SNA use:n IP.SPIPE use:n IP6 use:n IP6.PIPE use:n IP6.SPIPE use:n HTTP:10001
+KAS_HUB_ADDRESS=yangpa.usca.ibm.com
+KAS_HUB_PROTOCOL=ip.pipe
+KAS_HUB_PORT=1918
+# =============================================
+# CURI Data Provider connection (KAS_CURI_DP_ENABLED is YES)
+# ---------------------------------------------
+# KDC_FAMILIES=IP.PIPE use:n IP use:n SNA use:n IP.SPIPE use:n IP6 use:n IP6.PIPE use:n IP6.SPIPE use:n HTTP:10001
+# KAS_CURI_DP_URL_PROTOCOL=HTTP
+# KAS_CURI_DP_URL_HOSTNAME=yangpa.usca.ibm.com
+# KAS_CURI_DP_URL_HTTP_PORT=15210
+# KAS_CURI_DP_URL_HTTPS_PORT=15211
+# KAS_CURI_DP_AUTH=Yes
+# KAS_CURI_DP_USER=sysadmin
+# KAS_CURI_DP_PASSWORD=password
+# =============================================
+ATTRLIB=ATTRLIB
+KAS_OSLC_TEMPLATE_DIR=OSLC
+# =============================================
+KBB_RAS1=ERROR (UNIT:kascuri ERROR STATE) (UNIT:prtpproc ERROR STATE)
+#

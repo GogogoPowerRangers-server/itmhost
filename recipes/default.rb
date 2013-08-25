@@ -46,12 +46,6 @@ directory "/home/vagrant/temp" do
     action :create
 end
 
-link "/home/vagrant/JazzSCM" do
-    owner "vagrant"
-    group "vagrant"
-    to "/Users/dokamura/JazzSCM"
-end
-
 link "/home/vagrant/bin" do
     owner "vagrant"
     group "vagrant"
@@ -65,6 +59,10 @@ link "/home/vagrant/itmdev" do
 end
 
 yum_package "compat-libstdc++-33" do
+  action :install
+end
+
+yum_package "dos2unix" do
   action :install
 end
 
@@ -88,15 +86,12 @@ yum_package "pam-devel" do
   action :install
 end
 
-yum_package "unzip" do
+yum_package "unix2dos" do
   action :install
 end
 
-# Minimal ITM
-directory "/opt/IBM" do
-  owner "root"
-  mode "0755"
-  action :create
+yum_package "unzip" do
+  action :install
 end
 
 # Turn off iptables for port forwarding
@@ -106,21 +101,42 @@ execute "Turn off iptables" do
   action :run
 end
 
-# ITM Lite Download from AUSGSA or Dropbox
-remote_file "/vagrant_data/ITM-lite-6.3.0-2.el6.x86_64.rpm" do
+# OSLC-PM Service Provider Download
+remote_file "/vagrant_data/smai-oslc-pm-6.30.05.00-1.el6.x86_64.rpm" do
   # AUSGSA
-  # source "https://ausgsa.ibm.com/home/d/o/dokamura/web/public/ITM-lite-6.3.0-2.el6.x86_64.rpm"
+  # source "https://ausgsa.ibm.com/home/d/o/dokamura/web/public/smai-oslc-pm-6.30.05.00-1.el6.x86_64.rpm"
   # AWS S3
-  source "https://s3.amazonaws.com/dokamura/itmhost/ITM-lite-6.3.0-2.el6.x86_64.rpm"
+  source "https://s3.amazonaws.com/dokamura/itmhost/smai-oslc-pm-6.30.05.00-1.el6.x86_64.rpm"
   action :create_if_missing
-  mode "0744"
+  mode "0644"
   owner "vagrant"
   group "vagrant"
 end
 
-execute "Minimal ITM" do
-  command "rpm -e ITM-lite-6.3.0-2.el6.x86_64; rpm -i /vagrant_data/ITM-lite-6.3.0-2.el6.x86_64.rpm; chown -R vagrant:vagrant /opt/IBM/ITM"
-  not_if { ::File.exists?("/opt/IBM/ITM/bin")}
+execute "OSLC-PM Service Provider install" do
+  command "rpm -e smai-oslc-pm-6.30.05.00-1.el6.x86_64; rpm -i /vagrant_data/smai-oslc-pm-6.30.05.00-1.el6.x86_64.rpm; chown -R vagrant:vagrant /opt/ibm/ccm/oslc_pm; chmod -R o+r /opt/ibm/ccm/oslc_pm"
+  not_if { ::File.exists?("/opt/ibm/ccm/oslc_pm/bin")}
+end
+
+template "/opt/ibm/ccm/oslc_pm/config/as_silent_config.txt" do
+  "as_silent_config.erb"
+  action :create_if_missing
+  mode "0644"
+  owner "vagrant"
+  group "vagrant"
+end
+
+template "/opt/ibm/ccm/oslc_pm/config/DOT.as.environment" do
+  "DOT.as.environment.erb"
+  action :create_if_missing
+  mode "0644"
+  owner "vagrant"
+  group "vagrant"
+end
+
+execute "OSLC-PM Service Provider configuration" do
+  command "/opt/ibm/ccm/oslc_pm/bin/itmcmd config -A as -p /opt/ibm/ccm/oslc_pm/config/as_silent_config.txt; chown vagrant:vagrant /opt/ibm/ccm/oslc_pm/config/as.environment"
+  not_if { ::File.exists?("/opt/ibm/ccm/oslc_pm/config/as.environment")}
 end
 
 # Python RDF
@@ -137,7 +153,23 @@ execute "EPEL repository" do
   creates "/tmp/epel_repository"
 end
 
+yum_package "python-devel" do
+  action :install
+end
+
 yum_package "python-rdflib" do
+  action :install
+end
+
+yum_package "ruby-devel" do
+  action :install
+end
+
+gem_package "json" do
+  action :install
+end
+
+gem_package "rest-client" do
   action :install
 end
 

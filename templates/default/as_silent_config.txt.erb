@@ -1,0 +1,92 @@
+# ****************************************************************************
+# *
+# * Run this command:
+# *
+# *     /opt/ibm/ccm/oslc_pm/bin/itmcmd config -A as -p /opt/ibm/ccm/oslc_pm/config/as_silent_config.txt
+# *
+# * Licensed Materials - Property of IBM
+# *
+# * OCO Source Materials - IBM Confidential
+# * 5724-C04
+# *
+# * Copyright IBM Corporation 2007-2013 All Rights Reserved
+# *
+# * The source code for this program is not published or other-
+# * wise divested of its trade secrets, irrespective of what has
+# * been deposited with the U.S. Copyright Office.
+# *****************************************************************************
+
+# This is a sample silent configuration response file for Tivoli Enterprise Monitoring Automation Server.
+
+# To configure Tivoli Enterprise Monitoring Automation Server using this silent response file:
+#   1) copy this file to another location and modify the necessary parameters
+#   2) run "itmcmd config -A -p <silent_response_file> as"
+#      - give an absolute path for the silent_response_file
+#      - as is the product code of Tivoli Enterprise Monitoring Automation Server
+
+# Syntax rules:
+# - Comment lines begin with "#"
+# - Blank lines are ignored
+# - Parameter lines are PARAMETER=value (do not put space before the PARAMETER)
+# - Space before or after an equal sign is OK
+# - Parameter values should NOT contain the following characters $, =, or |
+
+################## REGISTRY SERVICES CONNECTION CONFIGURATION ##################
+
+# Enable Registry Services access
+KAS_REGISTRY_SERVICES_ENABLED=YES
+
+# The protocol of the Registry Services
+# Available protocols must be specified as follows:
+#
+#        =HTTP
+#        =HTTPS
+# Protocol is HTTP or HTTPS.
+#
+KAS_REGISTRY_SERVICES_URL_PROTOCOL=HTTP
+
+# The hostname of the Registry Services
+KAS_REGISTRY_SERVICES_URL_HOSTNAME=nc185029.tivlab.austin.ibm.com
+
+# The HTTP port of the Registry Services
+KAS_REGISTRY_SERVICES_URL_HTTP_PORT=16310
+
+# The HTTPS port of the Registry Services
+KAS_REGISTRY_SERVICES_URL_HTTPS_PORT=16311
+
+# Set user authentication for Registry Services
+KAS_REGISTRY_SERVICES_AUTH=YES
+
+# The name of a user that is authorized to access the Registry Services 
+# server. This must be a valid WebSphere user name
+KAS_REGISTRY_SERVICES_USER=system
+
+# The password of the user that is authorized to access the Registry Services server
+KAS_REGISTRY_SERVICES_PASSWORD={AES256:keyfile:a}E5sQ08hF/o1b57gPVM5ZSA==
+
+# When the OSLC Performance Monitoring service provider is configured for a Hub monitoring server 
+# that is enabled for Hot Standby,  a value must be configured for the acting hub alias. The acting
+# hub alias must match the acting hub alias configured for the OSLC Performance Monitoring service 
+# provider associated with the other Hub monitoring server in the Hot Standby environment.  
+# The acting hub alias is used to create a single service provider entry in Registry Services 
+# for the Hot Standby environment and each Hot Standby environment must have a unique alias value.
+KAS_REGISTRY_SERVICES_ACTING_HUB_ALIAS=
+
+################## AUTOMATION SERVER CONNECTION CONFIGURATION ##################
+
+# The protocol that the automation server uses 
+# for incoming resource query requests.
+# Available protocols must be specified as follows:
+#
+#        =HTTP
+#        =HTTPS
+#
+KAS_SERVER_PROTOCOL=HTTP
+
+# The port number that the automation server uses
+# for incoming resource query HTTP requests
+KAS_SERVER_HTTP_PORT=10001
+
+# The port number that the automation server uses
+# for incoming resource query HTTPS requests
+KAS_SERVER_HTTPS_PORT=10002
