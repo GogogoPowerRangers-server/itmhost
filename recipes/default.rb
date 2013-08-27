@@ -82,11 +82,11 @@ yum_package "rsync" do
   action :install
 end
 
-yum_package "pam-devel" do
+yum_package "curl" do
   action :install
 end
 
-yum_package "unix2dos" do
+yum_package "wget" do
   action :install
 end
 
